@@ -1,6 +1,5 @@
 #include "CentreCommercial.h"
 #include "Partie.h"
-
 using namespace std;
 
 CentreCommercial::CentreCommercial() :

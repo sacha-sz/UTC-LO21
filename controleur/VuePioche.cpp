@@ -2,6 +2,8 @@
 #include "VuePioche.h"
 #include "Partie.h"
 
+using namespace std;
+
 VuePioche::VuePioche(Pioche* pioche, QWidget *parent) {
 
     if(pioche->get_taille() == 0) {
@@ -25,3 +27,8 @@ VuePioche::VuePioche(Pioche* pioche, QWidget *parent) {
     barre_pioche->setStyle(QStyleFactory::create("Fusion"));
     this->addWidget(barre_pioche,100, Qt::AlignCenter);
 }
+
+//VuePioche::~VuePioche() {
+//    delete pioche_exception;
+//    delete barre_pioche;
+//}

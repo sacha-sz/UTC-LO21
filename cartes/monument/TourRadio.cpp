@@ -1,6 +1,8 @@
 #include "TourRadio.h"
 #include "Partie.h"
 
+using namespace std;
+
 TourRadio::TourRadio() :
     Monument("TourRadio",
              22,

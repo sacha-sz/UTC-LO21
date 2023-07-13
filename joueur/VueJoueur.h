@@ -34,9 +34,9 @@ private:
     QGridLayout* layout_batiments; // grille des batiments du joueur
     QGridLayout* layout_monuments; // grille des monuments du joueur
     QGridLayout* layout_batiments_ferme; // grille des batiments ferme du joueur
-    vector<VueCarte*>* vue_batiments; // adresses des batiments VueCarte
-    vector<VueCarte*>* vue_batiments_ferme; // adresses des batiments fermés VueCarte
-    vector<VueCarte*>* vue_monuments; // adresses des monuments VueCarte
+    std::vector<VueCarte*>* vue_batiments; // adresses des batiments VueCarte
+    std::vector<VueCarte*>* vue_batiments_ferme; // adresses des batiments fermés VueCarte
+    std::vector<VueCarte*>* vue_monuments; // adresses des monuments VueCarte
     QPushButton *bat_ferme;
     QPushButton* bouton_achat;
     Joueur *joueur;

@@ -1,6 +1,8 @@
 #include "Pizzeria.h"
 #include "Partie.h"
 
+using namespace std;
+
 Pizzeria::Pizzeria() :
             Batiment("Pizzeria",
                      1 ,

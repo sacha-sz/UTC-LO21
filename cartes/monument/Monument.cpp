@@ -1,5 +1,4 @@
 #include "Monument.h"
-
 using namespace std;
 
 Monument::Monument(const string& nom, unsigned int prix, const string& description_effet, const string& path_image, const std::string& path_actif) :

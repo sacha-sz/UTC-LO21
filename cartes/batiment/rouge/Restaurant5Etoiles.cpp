@@ -1,6 +1,8 @@
 #include "Restaurant5Etoiles.h"
 #include "Partie.h"
 
+using namespace std;
+
 Restaurant5Etoiles::Restaurant5Etoiles() :
             Batiment("Restaurant5Etoiles",
                      3 ,

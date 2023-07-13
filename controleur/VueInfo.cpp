@@ -1,7 +1,7 @@
 #include "VueInfo.h"
 using namespace std;
 
-VueInfo::VueInfo(QWidget *parent) {
+VueInfo::VueInfo() {
     /// Création de la zone d'information permanente
     info_permament = new QLabel("Informations sur le tour actuel :");
     info_permament->setAlignment(Qt::AlignCenter);
@@ -32,9 +32,9 @@ VueInfo::VueInfo(QWidget *parent) {
     this->addWidget(scroll_info, 1, Qt::AlignCenter);
 }
 
-void VueInfo::add_info(const string &info) {
-    string info_affiche = "\n" + info + "\n";
-    QLabel *label = new QLabel(QString::fromStdString(info_affiche), widget_layout_info);
+void VueInfo::add_info(const std::string &info) {
+    std::string info_affiche = "\n" + info + "\n";
+    auto *label = new QLabel(QString::fromStdString(info_affiche), widget_layout_info);
     label->setAlignment(Qt::AlignCenter);
     label->setFixedWidth(250);
     label->setContentsMargins(0, 200, 0, 200);

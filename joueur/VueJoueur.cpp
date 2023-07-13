@@ -2,6 +2,8 @@
 #include <QPixmap>
 #include "Partie.h"
 
+using namespace std;
+
 VueJoueur::VueJoueur(Joueur* j,bool e_j_a, QWidget *parent) : carte_choisie(nullptr) {
     /// Vue d'un joueur
     est_joueur_actuel = e_j_a;
@@ -87,7 +89,7 @@ VueJoueur::VueJoueur(Joueur* j,bool e_j_a, QWidget *parent) : carte_choisie(null
             // Incrémentation
             ind_bat++;
             i++;
-            }
+        }
         ind_couleurs++;
     }
     layout_batiments->setAlignment(Qt::AlignLeft);

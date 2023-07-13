@@ -1,6 +1,7 @@
 #include "BanqueDeMinivilles.h"
 #include "Partie.h"
 
+using namespace std;
 
 BanqueDeMinivilles::BanqueDeMinivilles()
         : Batiment("BanqueDeMinivilles",

@@ -1,6 +1,8 @@
 #include "HalleDeMarche.h"
 #include "Partie.h"
 
+using namespace std;
+
 HalleDeMarche::HalleDeMarche()
         : Batiment("HalleDeMarche",
                    2,

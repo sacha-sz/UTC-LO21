@@ -1,6 +1,8 @@
 #include "Mine.h"
 #include "Partie.h"
 
+using namespace std;
+
 Mine::Mine() :
     Batiment("Mine",
          6,

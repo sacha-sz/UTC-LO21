@@ -1,24 +1,13 @@
-cmake_minimum_required(VERSION 3.24)
-project(Machi_Koro)
-
-set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
-
-#set(CMAKE_PREFIX_PATH "D:/Qt/6.3.0/mingw_64/lib/cmake")#???
-#set(CMAKE_PREFIX_PATH "/home/theo/LO21/Qt/6.4.1/gcc_64/lib/cmake") #Theo
-#set(CMAKE_PREFIX_PATH "D:/Qt/6.4.1/mingw_64/lib/cmake") #???
-set(CMAKE_PREFIX_PATH "C:/Qt/6.5.1/mingw_64/lib/cmake") #Sacha
+# Stockage dans ce fichier des liens pour le fichier CMakeLists.txt et les imports
 
 
+## CMakeLists.txt
 
-find_package(Qt6 COMPONENTS
-        Core
-        Gui
-        Widgets
-        Multimedia
-        REQUIRED)
+```cmake
+cmake_minimum_required(VERSION 3.23)
+project(src)
+
+set(CMAKE_CXX_STANDARD 14)
 
 include_directories(cartes)
 include_directories(cartes/batiment)
@@ -27,16 +16,15 @@ include_directories(cartes/batiment/rouge)
 include_directories(cartes/batiment/vert)
 include_directories(cartes/batiment/violet)
 include_directories(cartes/monument)
+include_directories(Joueur)
 include_directories(controleur)
 include_directories(controleur/EditionDeJeu)
-include_directories(exception)
-include_directories(joueur)
 
-add_executable(Machi_Koro
+add_executable(src
         main.cpp
 
-        cartes/VueCarte.cpp
-        cartes/VueCarte.h
+        Joueur/Joueur.cpp
+        Joueur/Joueur.h
 
         cartes/Carte.cpp
         cartes/Carte.h
@@ -88,8 +76,6 @@ add_executable(Machi_Koro
         cartes/batiment/vert/MoonsterSoda.cpp
         cartes/batiment/vert/Superette.h
         cartes/batiment/vert/Superette.cpp
-        cartes/batiment/vert/CaveAVin.cpp
-        cartes/batiment/vert/CaveAVin.h
 
         cartes/batiment/violet/Arboretum.cpp
         cartes/batiment/violet/Arboretum.h
@@ -105,8 +91,6 @@ add_executable(Machi_Koro
         cartes/batiment/violet/MaisonEdition.h
         cartes/batiment/violet/Stade.cpp
         cartes/batiment/violet/Stade.h
-        cartes/batiment/violet/MgaGameCenter.cpp
-        cartes/batiment/violet/MgaGameCenter.h
 
         cartes/batiment/rouge/Cafe.cpp
         cartes/batiment/rouge/Cafe.h
@@ -123,8 +107,6 @@ add_executable(Machi_Koro
         cartes/batiment/rouge/SushiBar.cpp
         cartes/batiment/rouge/SushiBar.h
 
-        cartes/batiment/bleu/PetitBateauDePeche.cpp
-        cartes/batiment/bleu/PetitBateauDePeche.h
         cartes/batiment/bleu/Chalutier.cpp
         cartes/batiment/bleu/Chalutier.h
         cartes/batiment/bleu/ChampBle.cpp
@@ -139,6 +121,8 @@ add_executable(Machi_Koro
         cartes/batiment/bleu/Foret.h
         cartes/batiment/bleu/Mine.cpp
         cartes/batiment/bleu/Mine.h
+        cartes/batiment/bleu/PetitBateauDePeche.cpp
+        cartes/batiment/bleu/PetitBateauDePeche.h
         cartes/batiment/bleu/Verger.cpp
         cartes/batiment/bleu/Verger.h
         cartes/batiment/bleu/Vignoble.cpp
@@ -146,64 +130,75 @@ add_executable(Machi_Koro
 
         controleur/EditionDeJeu/EditionDeJeu.cpp
         controleur/EditionDeJeu/EditionDeJeu.h
-        controleur/Pioche.cpp
-        controleur/Pioche.h
-        controleur/Partie.cpp
-        controleur/Partie.h
         controleur/Shop.cpp
         controleur/Shop.h
-        controleur/VuePartie.cpp
-        controleur/VuePartie.h
-        controleur/VuePartie.cpp
-        controleur/VuePartie.h
-        controleur/VuePioche.cpp
-        controleur/VuePioche.h
-        controleur/VueShop.cpp
-        controleur/VueShop.h
-        controleur/VueInfo.cpp
-        controleur/VueInfo.h
-
-        joueur/Joueur.cpp
-        joueur/Joueur.h
-        joueur/VueJoueur.cpp
-        joueur/VueJoueur.h
-
-        exception/gameExeption.h
+        controleur/Pioche.cpp
+        controleur/Pioche.h
         )
+```
 
-target_link_libraries(Machi_Koro
-        Qt::Core
-        Qt::Gui
-        Qt::Widgets
-        Qt::Multimedia
-        )
+## Imports
+```cpp
+/// Importation des classes monuments
+#include "Aeroport.h"
+#include "CentreCommercial.h"
+#include "FabriqueDuPereNoel.h"
+#include "Gare.h"
+#include "HotelDeVille.h"
+#include "ParcAttraction.h"
+#include "Port.h"
+#include "TourRadio.h"
 
+/// Importation des batiments verts
+#include "BanqueDeMinivilles.h"
+#include "Boulangerie.h"
+#include "EntrepriseDeDemenagement.h"
+#include "EntrepriseDeTravauxPublics.h"
+#include "Epicerie.h"
+#include "FabriqueDeMeubles.h"
+#include "Fleuriste.h"
+#include "Fromagerie.h"
+#include "HalleDeMarche.h"
+#include "MarcheDeFruitsEtLegumes.h"
+#include "MoonsterSoda.h"
+#include "Superette.h"
 
-if (WIN32)
-    set(DEBUG_SUFFIX)
-    if (MSVC AND CMAKE_BUILD_TYPE MATCHES "Debug")
-        set(DEBUG_SUFFIX "d")
-    endif ()
-    set(QT_INSTALL_PATH "${CMAKE_PREFIX_PATH}")
-    if (NOT EXISTS "${QT_INSTALL_PATH}/bin")
-        set(QT_INSTALL_PATH "${QT_INSTALL_PATH}/..")
-        if (NOT EXISTS "${QT_INSTALL_PATH}/bin")
-            set(QT_INSTALL_PATH "${QT_INSTALL_PATH}/..")
-        endif ()
-    endif ()
-    if (EXISTS "${QT_INSTALL_PATH}/plugins/platforms/qwindows${DEBUG_SUFFIX}.dll")
-        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E make_directory
-                "$<TARGET_FILE_DIR:${PROJECT_NAME}>/plugins/platforms/")
-        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E copy
-                "${QT_INSTALL_PATH}/plugins/platforms/qwindows${DEBUG_SUFFIX}.dll"
-                "$<TARGET_FILE_DIR:${PROJECT_NAME}>/plugins/platforms/")
-    endif ()
-    foreach (QT_LIB Core Gui Widgets Multimedia)
-        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E copy
-                "${QT_INSTALL_PATH}/bin/Qt6${QT_LIB}${DEBUG_SUFFIX}.dll"
-                "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
-    endforeach (QT_LIB)
-endif ()
+/// Importation des batiments bleus
+#include "Chalutier.h"
+#include "ChampBle.h"
+#include "ChampFleur.h"
+#include "ChampMais.h"
+#include "Ferme.h"
+#include "Foret.h"
+#include "Mine.h"
+#include "PetitBateauDePeche.h"
+#include "Verger.h"
+#include "Vignoble.h"
+
+/// Importation des batiments rouges
+#include "Cafe.h"
+#include "ClubPrive.h"
+#include "Pizzeria.h"
+#include "Restaurant.h"
+#include "Restaurant5Etoiles.h"
+#include "StandDeHamburger.h"
+#include "SushiBar.h"
+
+/// Importation des batiments violets
+#include "Arboretum.h"
+#include "CentreAffaires.h"
+#include "CentreImpots.h"
+#include "ChaineTelevision.h"
+#include "EntrepriseRenovation.h"
+#include "MaisonEdition.h"
+#include "Stade.h"
+#include "Startup.h"
+
+/// Importation des controleurs
+#include "EditionDeJeu.h"
+#include "Pioche.h"
+#include "Shop.h"
+
+/// Importation des joueurs
+)
+```

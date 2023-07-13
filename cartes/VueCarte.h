@@ -12,19 +12,21 @@ class VueCarte : public QPushButton
 Q_OBJECT
 public:
     VueCarte(const Carte& c,bool etat, bool est_act = false, QWidget *parent = nullptr);
+    ~VueCarte() override = default;
+
     explicit VueCarte(QWidget *parent = nullptr);
     // affecter une nouvelle carte à la vue
-    const Carte* getCarte() const { return carte; }
-    QPixmap get_pixmap() const{return pixmap;}
-    void set_pixmap(string path){pixmap = QPixmap(QString::fromStdString(path));};
+    [[nodiscard]] const Carte* getCarte() const { return carte; }
+    [[nodiscard]] QPixmap get_pixmap() const{return pixmap;}
+    void set_pixmap(std::string path){pixmap = QPixmap(QString::fromStdString(path));};
     void set_icon(QPixmap pixmap){ButtonIcon = QIcon(pixmap);};
-    bool get_est_actif() const{return est_actif;}
+    [[nodiscard]] bool get_est_actif() const{return est_actif;}
 
 private:
     const Carte* carte = nullptr;
     QPixmap pixmap;
     QIcon ButtonIcon;
-    string path_carte;
+    std::string path_carte;
     bool est_actif;
 
 signals:

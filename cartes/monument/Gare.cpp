@@ -2,6 +2,8 @@
 #include "Partie.h"
 #include <QMessageBox>
 
+using namespace std;
+
 Gare::Gare()
     : Monument("Gare",
                4,

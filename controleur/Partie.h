@@ -21,10 +21,10 @@
 
 class Partie {
 private:
-    map<Batiment*, unsigned int> list_batiments;
-    vector<Monument*> list_monuments;
-    vector<string> tab_nom_edition;
-    vector<Joueur*> tab_joueurs;
+    std::map<Batiment*, unsigned int> list_batiments;
+    std::vector<Monument*> list_monuments;
+    std::vector<std::string> tab_nom_edition;
+    std::vector<Joueur*> tab_joueurs;
 
     unsigned int joueur_actuel;
     unsigned int nb_monuments_win;
@@ -47,49 +47,49 @@ private:
 
     //// Constructeur et Destructeur ////
     ~Partie();
-    explicit Partie(EditionDeJeu* edition, const map<string, string>& joueurs, const string& shop_type, unsigned int shop_size, const vector<EditionDeJeu *>& extensions = vector<EditionDeJeu *>());
+    explicit Partie(EditionDeJeu* edition, const std::map<std::string, std::string>& joueurs, const std::string& shop_type, unsigned int shop_size, const std::vector<EditionDeJeu *>& extensions = std::vector<EditionDeJeu *>());
 
 
 public:
     Partie(Partie const&) = delete;
     void operator=(const Partie&) = delete;
     static Partie* get_instance();
-    static Partie* get_instance(const string &edition_name, const list<string> &extensions_names, const map<string, string>& joueurs, const string& shop_type, unsigned int shop_size);
+    static Partie* get_instance(const std::string &edition_name, const std::list<std::string> &extensions_names, const std::map<std::string, std::string>& joueurs, const std::string& shop_type, unsigned int shop_size);
 
 
     //********** Jouer une partie **********//
     void jouer_partie();
     void jouer_tour();
     void suite_tour(bool achat_ok);
-    bool est_gagnant(unsigned int j) const;
+    [[nodiscard]] bool est_gagnant(unsigned int j) const;
 
 
     //********** Gestion des des **********//
-    unsigned int get_de_1() const { return de_1; }
+    [[nodiscard]] unsigned int get_de_1() const { return de_1; }
     void set_de_1(unsigned int de1) {de_1 = de1;}
-    unsigned int get_de_2() const {return de_2;}
+    [[nodiscard]] unsigned int get_de_2() const {return de_2;}
     void set_de_2(unsigned int de2) {de_2 = de2;}
 
 
     //********** Constructeurs et getters **********//
-    unsigned int get_joueur_actuel() const {return joueur_actuel;};
-    const vector <Joueur*>& get_tab_joueurs() const {return tab_joueurs;};
-    Shop* get_shop() const {return shop;};
-    Pioche* get_pioche() const {return pioche;};
-    vector<string> get_nom_edition() const {return tab_nom_edition;};
-    VuePartie* get_vue_partie() const {return vue_partie;};
-    bool get_moment_achat() const {return moment_achat;}
+    [[nodiscard]] unsigned int get_joueur_actuel() const {return joueur_actuel;};
+    [[nodiscard]] const std::vector <Joueur*>& get_tab_joueurs() const {return tab_joueurs;};
+    [[nodiscard]] Shop* get_shop() const {return shop;};
+    [[nodiscard]] Pioche* get_pioche() const {return pioche;};
+    [[nodiscard]] std::vector<std::string> get_nom_edition() const {return tab_nom_edition;};
+    [[nodiscard]] VuePartie* get_vue_partie() const {return vue_partie;};
+    [[nodiscard]] bool get_moment_achat() const {return moment_achat;}
     void set_moment_achat(bool b) {moment_achat = b;}
-    unsigned int get_nb_monuments_win() const {return nb_monuments_win;}
-    unsigned int get_compteur_tour() const {return compteur_tour;}
+    [[nodiscard]] unsigned int get_nb_monuments_win() const {return nb_monuments_win;}
+    [[nodiscard]] unsigned int get_compteur_tour() const {return compteur_tour;}
 
 
     //********** Methodes **********//
     //********** Methodes statiques **********//
-    static vector<Batiment*> map_to_vector(const map<Batiment*, unsigned int>& map_batiments);
+    static std::vector<Batiment*> map_to_vector(const std::map<Batiment*, unsigned int>& map_batiments);
 
     // Renvoie l'indice d'un joueur entier valide different de l'indice du joueur actuel
-    static unsigned int selectionner_joueur(const vector<Joueur*>& tab_joueurs, unsigned int joueur_actuel);
+    static unsigned int selectionner_joueur(const std::vector<Joueur*>& tab_joueurs, unsigned int joueur_actuel);
 
     // Lance un de
     static unsigned int lancer_de();
@@ -105,7 +105,7 @@ public:
     bool transfert_argent(unsigned int indice_joueur1, unsigned int indice_joueur2, unsigned int somme);
     void rejouer_tour();
 
-    vector<Batiment *> get_starter();
+    std::vector<Batiment *> get_starter();
 
     void acheter_carte_event(VueCarte* vc);
 };

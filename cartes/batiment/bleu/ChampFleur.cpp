@@ -1,6 +1,8 @@
 #include "ChampFleur.h"
 #include "Partie.h"
 
+using namespace std;
+
 ChampFleur::ChampFleur() :
     Batiment("ChampFleur",
          2,

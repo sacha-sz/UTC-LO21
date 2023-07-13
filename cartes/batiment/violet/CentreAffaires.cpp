@@ -1,6 +1,8 @@
 #include "CentreAffaires.h"
 #include "Partie.h"
 
+using namespace std;
+
 CentreAffaires::CentreAffaires():
     Batiment("CentreAffaires",
              8,

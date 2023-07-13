@@ -1,6 +1,8 @@
 #include "Arboretum.h"
 #include "Partie.h"
 
+using namespace std;
+
 Arboretum::Arboretum():
         Batiment("Arboretum",
                  3,

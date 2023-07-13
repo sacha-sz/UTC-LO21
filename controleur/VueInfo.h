@@ -10,7 +10,7 @@
 
 class VueInfo : public QVBoxLayout {
     public :
-        VueInfo(QWidget *parent = nullptr);
+        VueInfo();
         void add_info(const std::string& info);
 
 

@@ -1,6 +1,8 @@
 #include "SushiBar.h"
 #include "Partie.h"
 
+using namespace std;
+
 SushiBar::SushiBar() :
             Batiment("SushiBar",
                      2 ,

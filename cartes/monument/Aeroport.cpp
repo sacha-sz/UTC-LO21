@@ -1,6 +1,8 @@
 #include "Aeroport.h"
 #include "Partie.h"
 
+using namespace std;
+
 Aeroport::Aeroport() :
     Monument("Aeroport",
                 30,

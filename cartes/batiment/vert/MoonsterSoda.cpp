@@ -1,6 +1,8 @@
 #include "MoonsterSoda.h"
 #include "Partie.h"
 
+using namespace std;
+
 MoonsterSoda::MoonsterSoda()
         : Batiment("MoonsterSoda",
                    5,

@@ -1,6 +1,8 @@
 #include "Epicerie.h"
 #include "Partie.h"
 
+using namespace std;
+
 Epicerie::Epicerie()
         : Batiment("Epicerie",
                    0,

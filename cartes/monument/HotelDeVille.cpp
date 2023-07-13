@@ -1,6 +1,8 @@
 #include "HotelDeVille.h"
 #include "Partie.h"
 
+using namespace std;
+
 HotelDeVille::HotelDeVille() :
     Monument("HotelDeVille",
              0,

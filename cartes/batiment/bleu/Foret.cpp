@@ -1,6 +1,8 @@
 #include "Foret.h"
 #include "Partie.h"
 
+using namespace std;
+
 Foret::Foret() :
     Batiment("Foret",
          3,

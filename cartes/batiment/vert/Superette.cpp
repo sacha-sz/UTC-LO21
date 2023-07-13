@@ -1,6 +1,8 @@
 #include "Superette.h"
 #include "Partie.h"
 
+using namespace std;
+
 Superette::Superette()
         : Batiment("Superette",
                    2,

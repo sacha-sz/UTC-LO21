@@ -1,6 +1,8 @@
 #include "ChampBle.h"
 #include "Partie.h"
 
+using namespace std;
+
 ChampBle::ChampBle() :
     Batiment("ChampBle",
         1,

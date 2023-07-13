@@ -1,6 +1,8 @@
 #include "MgaGameCenter.h"
 #include "Partie.h"
 
+using namespace std;
+
 MgaGameCenter::MgaGameCenter() :
         Batiment("MgaGameCenter",
                  7,

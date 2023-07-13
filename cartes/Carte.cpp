@@ -1,5 +1,4 @@
 #include "Carte.h"
-
 using namespace std;
 
 Carte::Carte(const string& name, const string& effet_description, unsigned int price, const string& path_picture) {

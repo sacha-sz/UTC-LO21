@@ -1,6 +1,8 @@
 #include "Stade.h"
 #include "Partie.h"
 
+using namespace std;
+
 Stade::Stade() :
 Batiment("Stade",
          6,

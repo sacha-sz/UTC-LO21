@@ -8,13 +8,14 @@
 
 class VueShop  : public QGridLayout{
     Q_OBJECT
-    vector<VueCarte *> tab_vue_shop;
+    std::vector<VueCarte *> tab_vue_shop;
     VueCarte *carte_choisie;
     unsigned int largeur;
     QPushButton* bouton_acheter;
 
 public:
-    VueShop(Shop* shop, QWidget *parent = nullptr);
+    explicit VueShop(Shop* shop, QWidget *parent = nullptr);
+    //~VueShop();
 
 public slots:
     void clicked_acheter_event();

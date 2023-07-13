@@ -1,6 +1,8 @@
 #include "Fleuriste.h"
 #include "Partie.h"
 
+using namespace std;
+
 Fleuriste::Fleuriste()
         : Batiment("Fleuriste",
                    1,

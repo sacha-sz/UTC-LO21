@@ -3,6 +3,8 @@
 #include "VueCarte.h"
 #include "Monument.h"
 
+using namespace std;
+
 VueCarte::VueCarte(const Carte &c,bool etat,bool est_act, QWidget *parent) : QPushButton(parent),carte(&c){
     /// Créer la vue d'une carte
     // Si il est à afficher dans VueJoueur

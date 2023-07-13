@@ -1,6 +1,8 @@
 #include "PetitBateauDePeche.h"
 #include "Partie.h"
 
+using namespace std;
+
 PetitBateauDePeche::PetitBateauDePeche() :
         Batiment("PetitBateauDePeche",
                  2,

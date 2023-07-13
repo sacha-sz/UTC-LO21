@@ -1,6 +1,8 @@
 #include "FabriqueDuPereNoel.h"
 #include "Partie.h"
 
+using namespace std;
+
 FabriqueDuPereNoel::FabriqueDuPereNoel() :
         Monument("FabriqueDuPereNoel",
                  0,

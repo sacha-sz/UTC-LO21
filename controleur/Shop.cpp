@@ -1,5 +1,7 @@
 #include "Shop.h"
 
+using namespace std;
+
 Shop::Shop(unsigned int nb_tas) : nb_tas_max(nb_tas), nb_tas_reel(0), contenu() {
     ///Constructeur de Shop
 }
@@ -26,6 +28,9 @@ void Shop::completer_shop(Batiment *new_bat) {
 
 Shop::~Shop() {
     ///Destructeur de Shop
+    for (auto & it : contenu) {
+        delete it.first;
+    }
     contenu.clear();
 }
 

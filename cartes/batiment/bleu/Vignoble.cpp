@@ -1,6 +1,8 @@
 #include "Vignoble.h"
 #include "Partie.h"
 
+using namespace std;
+
 Vignoble::Vignoble() :
     Batiment("Vignoble",
          3,

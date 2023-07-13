@@ -4,6 +4,8 @@
 #include "Partie.h"
 #include "VuePartie.h"
 
+using namespace std;
+
 Partie::Handler Partie::handler=Partie::Handler();
 
 
@@ -49,7 +51,12 @@ Partie* Partie::get_instance() {
     return handler.instance;
 }
 
-Partie::Partie(EditionDeJeu* edition, const map<string, string>& joueurs, const string& shop_type, unsigned int shop_size, const vector<EditionDeJeu *>& extensions) : nb_monuments_win(edition->get_nb_monuments_win()), joueur_actuel(0), de_1(0), de_2(0),compteur_tour(0) {
+Partie::Partie(EditionDeJeu* edition,
+               const map<string, string>& joueurs,
+               const string& shop_type,
+               unsigned int shop_size,
+               const vector<EditionDeJeu *>& extensions) : nb_monuments_win(edition->get_nb_monuments_win()),
+               joueur_actuel(0), de_1(0), de_2(0),compteur_tour(0), moment_achat(false){
     ///Constructeur de Partie
 
     //Initialisation des variables utiles
@@ -167,23 +174,27 @@ vector<Batiment *> Partie::get_starter() {
 
 Partie::~Partie() {
     /// Destructeur de la classe Partie
-    // Destruction des joueurs
     for (auto joueur : tab_joueurs){
         delete joueur;
     }
+    tab_joueurs.clear();
 
-    // Destruction des batiments
     for (auto batiment : list_batiments){
         delete batiment.first;
     }
+    list_batiments.clear();
 
-    // Destruction des monuments
     for (auto monument : list_monuments){
         delete monument;
     }
+    list_monuments.clear();
+
+    tab_nom_edition.clear();
 
     delete shop;
     delete pioche;
+    delete vue_partie;
+
 }
 
 void Partie::rejouer_tour() {
@@ -210,12 +221,12 @@ void Partie::ajout_batiment(Batiment *batiment) {
 
 void Partie::acheter_carte_ia() {
     //fonction qui permet a un joueur donne d'acheter une carte (batiment ou monument)
-    int choix_ia = -1;
+    int choix_ia;
     bool visit[2] = {false, false};
-    bool transaction_fin = false;
+    bool transaction_fin;
 
 
-    choix_ia = rand() % 5;
+    choix_ia = (int)lancer_de() % 5;
     if (choix_ia == 0) {
         visit[0] = true;
         transaction_fin = acheter_bat_ia();
@@ -243,8 +254,6 @@ bool Partie::acheter_monu_ia() {
     //fonction qui permet a un joueur donne d'acheter un monument
     Monument* mon_picked;
     Joueur *joueur_act = tab_joueurs[joueur_actuel];
-    int choix = -1;
-    unsigned int pos = 1;
     vector<Monument*> monuments_dispo;
 
 
@@ -257,8 +266,12 @@ bool Partie::acheter_monu_ia() {
     if (monuments_dispo.empty()) {
         return false;
     }
+    unsigned int res = 0;
+    for (int i = 0; i < lancer_de(); i++) {
+        res += lancer_de();
+    }
 
-    mon_picked = monuments_dispo[rand() % monuments_dispo.size()];
+    mon_picked = monuments_dispo[res % monuments_dispo.size()];
 
     joueur_act->activer_monument(mon_picked);
     joueur_act->set_argent(joueur_act->get_argent() - mon_picked->get_prix());
@@ -271,7 +284,6 @@ bool Partie::acheter_bat_ia() {
     //fonction qui permet a un joueur donne d'acheter un batiment
     Batiment* bat_picked;
     Joueur *joueur_act = tab_joueurs[joueur_actuel];
-    int choix = -1;
     vector<Batiment*> bat_shop = shop->get_contenu_v();
 
 
@@ -299,14 +311,19 @@ bool Partie::acheter_bat_ia() {
         }
     }
 
+    unsigned int res = 0;
+    for (int i = 0; i < lancer_de(); i++) {
+        res += lancer_de();
+    }
+
     if (bat_shop_couleur.empty() && bat_shop_prix_ok.empty()) {
         return false;
     }
     else if (bat_shop_couleur.empty()) {
-        bat_picked = bat_shop_prix_ok[rand() % bat_shop_prix_ok.size()];
+        bat_picked = bat_shop_prix_ok[res % bat_shop_prix_ok.size()];
     }
     else {
-        bat_picked = bat_shop_couleur[rand() % bat_shop_couleur.size()];
+        bat_picked = bat_shop_couleur[res % bat_shop_couleur.size()];
     }
 
 
@@ -367,7 +384,12 @@ bool Partie::acheter_monu(VueCarte* vue_carte) {
             }
         }
 
-        mon_picked = monuments_dispo[rand() % monuments_dispo.size()];
+        unsigned int res = 0;
+        for (int i = 0; i < lancer_de(); i++) {
+            res += lancer_de();
+        }
+
+        mon_picked = monuments_dispo[res % monuments_dispo.size()];
 
         joueur_act->activer_monument(mon_picked);
         joueur_act->set_argent(joueur_act->get_argent() - mon_picked->get_prix());
@@ -390,7 +412,6 @@ bool Partie::acheter_bat(VueCarte* vue_carte) {
         }
     }
 
-    //bat_picked = bat_shop[choix - 1];
     if (bat_picked->get_prix() > joueur_act->get_argent()) {
         QWidget* pop_up = new QWidget();
         pop_up->setWindowTitle("Erreur");
@@ -796,6 +817,7 @@ void Partie::suite_tour(bool achat_ok){
     vue_partie->set_bouton_rien_faire(false);
     vue_partie->update_vue_joueur();
     vue_partie->update_vue_pioche();
+    vue_partie->update_des();
     vue_partie->update_vue_shop();
     vue_partie->update_vue_info();
     vue_partie->get_vue_infos()->add_info("Fin du tour");
@@ -826,12 +848,11 @@ void Partie::suite_tour(bool achat_ok){
 }
 
 unsigned int Partie::selectionner_joueur(const vector<Joueur*>& tab_joueurs, unsigned int joueur_actuel){
-    unsigned int count = 0;
     unsigned int selection = -1;
 
     //cas où la decision doit se faire par une ia
     if(tab_joueurs[joueur_actuel]->get_est_ia()){
-        selection = rand() % tab_joueurs.size();
+        selection = (int)lancer_de() % tab_joueurs.size();
         if(selection == joueur_actuel) selection = (selection + 1)%tab_joueurs.size();
     }
     //cas où c'est un joueur reel qui prend la decision

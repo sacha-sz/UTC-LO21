@@ -1,6 +1,8 @@
 #include "MarcheDeFruitsEtLegumes.h"
 #include "Partie.h"
 
+using namespace std;
+
 MarcheDeFruitsEtLegumes::MarcheDeFruitsEtLegumes()
         : Batiment("MarcheDeFruitsEtLegumes",
                    2,

@@ -1,6 +1,7 @@
 #include "VueShop.h"
 #include "Partie.h"
 
+using namespace std;
 
 VueShop::VueShop(Shop *shop, QWidget *parent)  : carte_choisie(nullptr){
     /// Calcul de la dimension de la grille
@@ -120,3 +121,9 @@ void VueShop::clicked_acheter_event(){
         pop_up->show();
     }
 }
+
+//VueShop::~VueShop() {
+//    tab_vue_shop.clear();
+//    delete carte_choisie;
+//    delete bouton_acheter;
+//}

@@ -1,6 +1,8 @@
 #include "EntrepriseRenovation.h"
 #include "Partie.h"
 
+using namespace std;
+
 EntrepriseRenovation::EntrepriseRenovation() :
         Batiment("EntrepriseRenovation",
                  1,

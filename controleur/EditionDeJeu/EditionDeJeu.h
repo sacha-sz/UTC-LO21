@@ -81,29 +81,29 @@
 
 class EditionDeJeu{
     protected:
-        string nom;
+        std::string nom;
         unsigned int nb_joueurs_max;
         unsigned int nb_monuments_win;
 
-        vector<Monument*> monument;
-        map<Batiment*, unsigned int> batiment;
+        std::vector<Monument*> monument;
+        std::map<Batiment*, unsigned int> batiment;
 
         bool est_edition;
 
     public:
         /// *** Constructeur et destructeur *** ///
-        EditionDeJeu(const string& nom);
+        EditionDeJeu(const std::string& nom);
         ~EditionDeJeu();
 
         /// *** Getters *** ///
-        const string& get_nom() const {return nom;};
+        const std::string& get_nom() const {return nom;};
 
         unsigned int get_nb_joueurs_max() const {return nb_joueurs_max;};
         unsigned int get_nb_monuments_win() const {return nb_monuments_win;};
 
         /// *** Recuperation des monuments et des batiments *** ///
-        vector<Monument*> get_monument() const {return monument;};
+        std::vector<Monument*> get_monument() const {return monument;};
 
-        map<Batiment*, unsigned int> get_batiment() const {return batiment;};
+        std::map<Batiment*, unsigned int> get_batiment() const {return batiment;};
 };
 #endif //MACHI_KORO_EDITIONDEJEU_H

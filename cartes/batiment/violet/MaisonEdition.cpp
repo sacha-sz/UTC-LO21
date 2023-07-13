@@ -1,6 +1,8 @@
 #include "MaisonEdition.h"
 #include "Partie.h"
 
+using namespace std;
+
 MaisonEdition::MaisonEdition():
         Batiment("MaisonEdition",
                  5,

@@ -2,21 +2,18 @@
 #define SRC_GAMEEXEPTION_H
 
 #include <exception>
-#include <string>
 
-using namespace std;
-
-class gameException: public exception {
+class gameException: public std::exception {
     public:
-        gameException(string const& i):info(i){}
+        explicit gameException(std::string const& i):info(i){}
 
-        const char* what() const noexcept override
+        [[nodiscard]] const char* what() const noexcept override
         {
             return info.c_str();
         }
 
     private:
-        string info;
+        std::string info;
 };
 
 #endif //SRC_GAMEEXEPTION_H

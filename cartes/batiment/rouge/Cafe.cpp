@@ -1,6 +1,8 @@
 #include "Cafe.h"
 #include "Partie.h"
 
+using namespace std;
+
 Cafe::Cafe() :
             Batiment("Cafe",
                      2,

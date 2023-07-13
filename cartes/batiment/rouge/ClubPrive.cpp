@@ -1,6 +1,8 @@
 #include "ClubPrive.h"
 #include "Partie.h"
 
+using namespace std;
+
 ClubPrive::ClubPrive() :
             Batiment("ClubPrive",
                      4 ,

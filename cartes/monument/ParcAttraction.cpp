@@ -1,6 +1,8 @@
 #include "ParcAttraction.h"
 #include "Partie.h"
 
+using namespace std;
+
 ParcAttraction::ParcAttraction() :
     Monument("ParcAttraction",
              16,

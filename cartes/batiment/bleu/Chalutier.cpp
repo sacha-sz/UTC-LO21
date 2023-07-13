@@ -1,6 +1,8 @@
 #include "Chalutier.h"
 #include "Partie.h"
 
+using namespace std;
+
 Chalutier::Chalutier() :
         Batiment("Chalutier",
         5,

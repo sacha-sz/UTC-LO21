@@ -1,6 +1,8 @@
 #include "Pioche.h"
 #include "Partie.h"
 
+using namespace std;
+
 Pioche::Pioche(const vector<Batiment*>& batiments) : taille_init(batiments.size()){
     /// Constructeur de la classe Pioche
 
@@ -22,6 +24,14 @@ Batiment* Pioche::get_carte() {
     // Sinon, on renvoie nullptr (erreur)
     else {
         throw gameException("La pioche est vide");
+    }
+}
+
+Pioche::~Pioche() {
+    /// Destructeur de la classe Pioche
+    while (!contenu.empty()){
+        delete contenu.top();
+        contenu.pop();
     }
 }
 

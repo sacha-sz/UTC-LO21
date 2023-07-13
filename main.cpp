@@ -2,7 +2,6 @@
 
 /// QT Includes
 #include <QApplication>
-#include <QtGui/QScreen>
 #include <QLineEdit>
 #include <QRadioButton>
 #include <QLayoutItem>
@@ -16,6 +15,7 @@
 /// Project Includes
 #include "Partie.h"
 #include <set>
+
 using namespace std;
 
 void resize_and_center(QWidget *widget, int width, int height)
@@ -38,10 +38,10 @@ void validate_menu_2(QWidget *menu, const string &edition, const list<string> &e
         mes_infos += " - le MGA game center\n";
         mes_infos += " - la fabrique du père noël\n";
     }
-    if (extensions.size() > 0){
+    if (!extensions.empty()){
         mes_infos += "Extensions: ";
-        for (auto it = extensions.begin(); it != extensions.end(); ++it){
-            mes_infos += *it + " ";
+        for (const auto & extension : extensions){
+            mes_infos += extension + " ";
         }
         mes_infos += "\n";
     }
@@ -369,52 +369,6 @@ void launch_menu_1(QApplication *app){
     menu->show();
 }
 
-void build_content_jeu(QWidget *jeu){
-
-    auto *main_layout = new QVBoxLayout(jeu);
-
-    auto *layout_entete = new QHBoxLayout();
-    auto label_entete = new QLabel("Ici entete");
-    layout_entete->addWidget(label_entete);
-
-    auto *layout_centre = new QHBoxLayout();
-    auto *layout_centre_gauche = new QVBoxLayout(); // Pioche et affichages
-
-    // build_content_centre_gauche(layout_centre_gauche);
-    auto label_centre_gauche = new QLabel("Ici pioche");
-    layout_centre_gauche->addWidget(label_centre_gauche);
-
-    auto *layout_centre_droite = new QVBoxLayout(); // Shop
-    auto label_centre_droite = new QLabel("Ici shop");
-    // build_content_centre_droite(layout_centre_droite);
-    layout_centre_droite->addWidget(label_centre_droite);
-    layout_centre->addLayout(layout_centre_gauche);
-    layout_centre->addLayout(layout_centre_droite);
-
-
-    auto *layout_joueur = new QHBoxLayout();
-    auto *layout_joueur_gauche = new QVBoxLayout(); // Infos joueur, monuments, argent, etc
-
-    // build_content_joueur_gauche(layout_joueur_gauche);
-    auto label_joueur_gauche = new QLabel("Ici infos joueur");
-    layout_joueur_gauche->addWidget(label_joueur_gauche);
-
-    auto *layout_joueur_droite = new QVBoxLayout(); // Batiments et bouton batiments fermes
-    // build_content_joueur_droite(layout_joueur_droite);
-
-    auto label_joueur_droite = new QLabel("Ici batiments");
-    layout_joueur_droite->addWidget(label_joueur_droite);
-    layout_joueur->addLayout(layout_joueur_gauche);
-    layout_joueur->addLayout(layout_joueur_droite);
-
-    main_layout->addLayout(layout_entete);
-    main_layout->addLayout(layout_centre);
-    main_layout->addLayout(layout_joueur);
-
-    jeu->setLayout(main_layout);
-
-    jeu->setWindowTitle("Machi Koro - Jeu");
-}
 
 int main(int argc, char * argv[]) {
 

@@ -1,6 +1,8 @@
 #include "Fromagerie.h"
 #include "Partie.h"
 
+using namespace std;
+
 Fromagerie::Fromagerie()
         : Batiment("Fromagerie",
                    5,

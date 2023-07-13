@@ -7,9 +7,14 @@
 #include "VueShop.h"
 #include "VuePioche.h"
 #include "VueInfo.h"
-#include <QStyleFactory>
 #include <QFormLayout>
-
+#include <QtGui>
+#include <QMovie>
+#include <QStyleFactory>
+#include <QWidget>
+#include <QVBoxLayout>
+#include <QLabel>
+#include "Pioche.h"
 
 class VuePartie : public QWidget
 {
@@ -33,18 +38,27 @@ public:
     QWidget* get_vue_carte() const {return fenetre_carte;}
     VueJoueur* get_vue_joueur() const {return vue_joueur;}
     VueInfo* get_vue_infos() const {return infos;}
+    QMovie* get_animation_de(unsigned int i) const {return map_des[i];}
 
 private:
     //Partie* partie_actuelle;
     unsigned int nb_joueurs;
     unsigned int joueur_affiche;
-    vector<VueCarte *> tab_vue_shop;
+    std::vector<VueCarte *> tab_vue_shop;
     //Labels sur la page
     QLabel* label_edj;
 
     QLabel* label_joueur_actuel;
+    // Dés
     QLCDNumber* lcd_de1;
     QLCDNumber* lcd_de2;
+    QMap<unsigned int, QMovie*> map_des;
+    QMovie* animation_de1;
+    QMovie* animation_de2;
+    QLabel* label_de1;
+    QLabel* label_de2;
+
+    //Images
     QLabel* pioche_exception;
     QLabel* image_entete;
     QLabel *affichage_de_1;
@@ -63,6 +77,7 @@ private:
     QHBoxLayout* layout_de_1;
     QHBoxLayout* layout_de_2;
     QHBoxLayout *body;
+    QVBoxLayout *body_gauche;
     VueJoueur* vue_joueur;
     QWidget *parent_fenetre;
     QWidget *fenetre_carte;
@@ -70,9 +85,13 @@ private:
     /// Milieu de la page
     //Pioche à gauche
     QVBoxLayout *pioche;
+    QVBoxLayout *des;
 
     QWidget *fenetre_pioche;
+    QWidget *fenetre_des;
+
     VuePioche* view_pioche;
+
     //Shop au centre
     VueShop* view_shop;
 

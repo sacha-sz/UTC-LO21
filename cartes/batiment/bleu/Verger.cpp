@@ -1,6 +1,8 @@
 #include "Verger.h"
 #include "Partie.h"
 
+using namespace std;
+
 Verger::Verger() :
     Batiment("Verger",
          3,

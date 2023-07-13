@@ -5,12 +5,22 @@
 
 using namespace std;
 
+
 VuePartie::VuePartie(QWidget *parent){
     /// Constructeur de VuePartie
     // Attributs principaux
     Partie *partie_actuelle = Partie::get_instance();
     parent_fenetre = parent;
     fenetre_carte = nullptr;
+
+    map_des.insert(1, new QMovie("../assets/des/1.gif"));
+    map_des.insert(2, new QMovie("../assets/des/2.gif"));
+    map_des.insert(3, new QMovie("../assets/des/3.gif"));
+    map_des.insert(4, new QMovie("../assets/des/4.gif"));
+    map_des.insert(5, new QMovie("../assets/des/5.gif"));
+    map_des.insert(6, new QMovie("../assets/des/6.gif"));
+    map_des.insert(0, new QMovie("../assets/des/0.gif"));
+
 
     structure = new QVBoxLayout();
 
@@ -93,24 +103,43 @@ VuePartie::VuePartie(QWidget *parent){
     layout_de_1->addWidget(affichage_de_1, 0, Qt::AlignCenter);
     layout_de_2->addWidget(affichage_de_2, 0, Qt::AlignCenter);
 
-    lcd_de1 = new QLCDNumber;
-    lcd_de1->display((int)partie_actuelle->get_de_1());
-    lcd_de1->setDigitCount(1);
-    lcd_de1->setSegmentStyle(QLCDNumber::Flat);
-    layout_de_1->addWidget(lcd_de1, 0, Qt::AlignCenter);
+    label_de1 = new QLabel;
+    animation_de1 = map_des.value((int)partie_actuelle->get_de_1());
+    animation_de1->setScaledSize(QSize(50, 50));
+    label_de1->setFixedSize(50, 50);
+    label_de1->setMovie(animation_de1);
+    animation_de1->start();
+
+    layout_de_1->addWidget(label_de1, 0, Qt::AlignCenter);
     layout_de_1->setAlignment(Qt::AlignCenter);
 
-    lcd_de2 = new QLCDNumber;
-    lcd_de2->display((int)partie_actuelle->get_de_2());
-    lcd_de2->setDigitCount(1);
-    lcd_de2->setSegmentStyle(QLCDNumber::Flat);
-    layout_de_2->addWidget(lcd_de2, 0, Qt::AlignCenter);
+    label_de2 = new QLabel;
+    animation_de2 = map_des.value((int)partie_actuelle->get_de_2());
+    animation_de2->setScaledSize(QSize(50, 50));
+    label_de2->setFixedSize(50, 50);
+    label_de2->setMovie(animation_de2);
+    animation_de2->start();
+
+    connect(animation_de1, &QMovie::frameChanged, [=, this](int frameNumber) {
+        if (frameNumber == animation_de1->frameCount() - 1) {
+            animation_de1->stop();
+        }
+    });
+
+    connect(animation_de2, &QMovie::frameChanged, [=, this](int frameNumber) {
+        if (frameNumber == animation_de2->frameCount() - 1) {
+            animation_de2->stop();
+        }
+    });
+
+    layout_de_2->addWidget(label_de2, 0, Qt::AlignCenter);
     layout_de_2->setAlignment(Qt::AlignCenter);
 
     display_des->addLayout(layout_de_1);
     display_des->addLayout(layout_de_2);
 
     entete->addLayout(display_des);
+    
 
     //création du bouton au cas où l'on ne veut rien acheter
     bouton_rien_faire = new QPushButton("Ne rien faire");
@@ -133,12 +162,19 @@ VuePartie::VuePartie(QWidget *parent){
     ///Affichage du Shop, de la Pioche et des informations
 
     body = new QHBoxLayout;
+    body_gauche = new QVBoxLayout;
+
     // Pioche
     view_pioche = new VuePioche(partie_actuelle->get_pioche(), nullptr);
     fenetre_pioche = new QWidget;
-    fenetre_pioche->setFixedSize(300, 520);
+    fenetre_pioche->setFixedSize(300, 260);
     fenetre_pioche->setLayout(view_pioche);
-    body->addWidget(fenetre_pioche, 100, Qt::AlignCenter);
+    body_gauche->addWidget(fenetre_pioche, 100, Qt::AlignCenter);
+
+    // petit espace
+    body_gauche->addSpacing(30);
+    body->addLayout(body_gauche, 100);
+
 
     // Shop
     scroll_shop = new QScrollArea;
@@ -149,12 +185,12 @@ VuePartie::VuePartie(QWidget *parent){
     scroll_shop->setWidgetResizable(true);
     unsigned int largeur = floor(sqrt(partie_actuelle->get_shop()->get_nb_tas_reel()));
     scroll_shop->setFixedWidth(130 * largeur);
-    scroll_shop->setFixedHeight(520);
+    scroll_shop->setFixedHeight(260);
     scroll_shop->setStyle(QStyleFactory::create("Fusion"));
     body->addWidget(scroll_shop,100, Qt::AlignCenter);
 
     // Informations sur le tour
-    infos = new VueInfo(nullptr);
+    infos = new VueInfo();
     widget_infos = new QWidget;
     widget_infos->setLayout(infos);
     widget_infos->setFixedSize(300, 520);
@@ -257,28 +293,39 @@ void VuePartie::update_vue_joueur() {
 }
 
 void VuePartie::update_des() {
-    // Mise à jour de l'affichage des dés
-    Partie* partie_actuelle = Partie::get_instance();
-    QLCDNumber* old_de_1 = lcd_de1;
-    QLCDNumber* old_de_2 = lcd_de2;
-    lcd_de1 = new QLCDNumber;
-    lcd_de1->display((int)partie_actuelle->get_de_1());
-    lcd_de1->setDigitCount(1);
-    lcd_de1->setSegmentStyle(QLCDNumber::Flat);
+    unsigned int de1 = Partie::get_instance()->get_de_1();
+    unsigned int de2 = Partie::get_instance()->get_de_2();
+
+    // Mise à jour des dés
+    animation_de1 = map_des.value((int)de1);
+    animation_de1->setScaledSize(QSize(50, 50));
+    label_de1->setFixedSize(50, 50);
+    label_de1->setMovie(animation_de1);
+    animation_de1->start();
 
 
-    lcd_de2 = new QLCDNumber;
-    lcd_de2->display((int)partie_actuelle->get_de_2());
-    lcd_de2->setDigitCount(1);
-    lcd_de2->setSegmentStyle(QLCDNumber::Flat);
+    label_de2 = new QLabel;
+    animation_de2 = map_des.value((int)de2);
+    animation_de2->setScaledSize(QSize(50, 50));
+    label_de2->setFixedSize(50, 50);
+    label_de2->setMovie(animation_de2);
+    animation_de2->start();
 
-    partie_actuelle->set_moment_achat(true);
-    layout_de_1->replaceWidget(old_de_1, lcd_de1);
-    layout_de_2->replaceWidget(old_de_2, lcd_de2);
-    delete old_de_1;
-    delete old_de_2;
+    connect(animation_de1, &QMovie::frameChanged, [=, this](int frameNumber) {
+        if (frameNumber == animation_de1->frameCount() - 1) {
+            animation_de1->stop();
+        }
+    });
+
+    connect(animation_de2, &QMovie::frameChanged, [=, this](int frameNumber) {
+        if (frameNumber == animation_de2->frameCount() - 1) {
+            animation_de2->stop();
+        }
+    });
+
     update();
 }
+
 
 void VuePartie::update_nom_joueur(){
     // Mise à jour du nom du joueur actuel dans l'entete
@@ -356,10 +403,11 @@ void VuePartie::update_vue_pioche() {
 
     view_pioche = new VuePioche(partie_actuelle->get_pioche(), nullptr);
     fenetre_pioche = new QWidget;
-    fenetre_pioche->setFixedSize(300, 520);
+    fenetre_pioche->setFixedSize(300, 260);
     fenetre_pioche->setLayout(view_pioche);
     fenetre_pioche->setStyle(QStyleFactory::create("Fusion"));
-    body->addWidget(fenetre_pioche, 100, Qt::AlignCenter);
+    // body_gauche->addWidget(fenetre_pioche, 100, Qt::AlignCenter);
+    body->replaceWidget(old_widget, fenetre_pioche);
 
     delete old;
     delete old_widget;
@@ -372,7 +420,7 @@ void VuePartie::update_vue_info () {
     VueInfo* old = infos;
     QWidget* old_widget = widget_infos;
 
-    infos = new VueInfo(nullptr);
+    infos = new VueInfo();
     widget_infos = new QWidget;
     widget_infos->setLayout(infos);
     widget_infos->setFixedSize(300, 520);

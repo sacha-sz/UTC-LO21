@@ -1,6 +1,8 @@
 #include "FabriqueDeMeubles.h"
 #include "Partie.h"
 
+using namespace std;
+
 FabriqueDeMeubles::FabriqueDeMeubles()
         : Batiment("FabriqueDeMeubles",
                    3,

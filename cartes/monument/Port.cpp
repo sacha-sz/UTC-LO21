@@ -1,6 +1,8 @@
 #include "Port.h"
 #include "Partie.h"
 
+using namespace std;
+
 Port::Port()
         : Monument("Port",
                    2,

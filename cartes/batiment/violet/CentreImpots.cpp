@@ -1,6 +1,8 @@
 #include "CentreImpots.h"
 #include "Partie.h"
 
+using namespace std;
+
 CentreImpots::CentreImpots():
         Batiment("CentreImpots",
                  4,

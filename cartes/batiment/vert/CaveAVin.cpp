@@ -1,6 +1,8 @@
 #include "CaveAVin.h"
 #include "Partie.h"
 
+using namespace std;
+
 CaveAVin::CaveAVin()
         : Batiment("CaveAVin",
                    3,

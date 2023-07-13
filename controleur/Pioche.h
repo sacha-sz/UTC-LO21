@@ -14,12 +14,12 @@ class Pioche {
         unsigned int taille_init;
 
     public:
-        explicit Pioche(const vector<Batiment*>& batiments);
-        ~Pioche() = default;
+        explicit Pioche(const std::vector<Batiment*>& batiments);
+        ~Pioche();
         bool est_vide() {return contenu.empty();};
         Batiment* get_carte(); // retourne la carte du dessus de la pioche
-        unsigned int get_taille() const {return contenu.size();};
-        unsigned int get_taille_init() const {return taille_init;};
+        [[nodiscard]] unsigned int get_taille() const {return contenu.size();};
+        [[nodiscard]] unsigned int get_taille_init() const {return taille_init;};
 };
 
 #endif //MACHI_KORO_PIOCHE_H

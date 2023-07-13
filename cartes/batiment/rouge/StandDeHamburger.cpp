@@ -1,6 +1,8 @@
 #include "StandDeHamburger.h"
 #include "Partie.h"
 
+using namespace std;
+
 StandDeHamburger::StandDeHamburger() :
             Batiment("StandDeHamburger",
                      1 ,

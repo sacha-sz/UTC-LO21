@@ -1,6 +1,8 @@
 #include "Ferme.h"
 #include "Partie.h"
 
+using namespace std;
+
 Ferme::Ferme() :
     Batiment("Ferme",
          1,

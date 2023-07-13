@@ -1,6 +1,8 @@
 #include "Boulangerie.h"
 #include "Partie.h"
 
+using namespace std;
+
 Boulangerie::Boulangerie()
         : Batiment("Boulangerie",
                    1,

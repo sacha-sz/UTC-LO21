@@ -1,5 +1,6 @@
 #include "EditionDeJeu.h"
 
+using namespace std;
 
 EditionDeJeu::EditionDeJeu(const string& nom_edition) : nom(nom_edition) {
     /// Constructeur de EditionDeJeu
