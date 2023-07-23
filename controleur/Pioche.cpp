@@ -30,7 +30,6 @@ Batiment* Pioche::get_carte() {
 Pioche::~Pioche() {
     /// Destructeur de la classe Pioche
     while (!contenu.empty()){
-        delete contenu.top();
         contenu.pop();
     }
 }

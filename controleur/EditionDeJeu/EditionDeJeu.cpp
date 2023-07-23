@@ -239,13 +239,13 @@ EditionDeJeu::~EditionDeJeu() {
     /// Destructeur d'Edition de Jeu
 
     // Destruction des monuments
-    for (auto& mon : monument) {
-        delete mon;
-    }
+//    for (auto& mon : monument) {
+//        delete mon;
+//    }
     monument.clear();
     // Destruction des batiments
-    for (auto& bat : batiment) {
-        delete bat.first;
-    }
+//    for (auto& bat : batiment) {
+//        delete bat.first;
+//    }
     batiment.clear();
 }

@@ -38,9 +38,6 @@ void Shop::completer_shop(Batiment *new_bat) {
 
 Shop::~Shop() {
     ///Destructeur de Shop
-    for (auto & it : contenu) {
-        delete it.first;
-    }
     contenu.clear();
 }
 

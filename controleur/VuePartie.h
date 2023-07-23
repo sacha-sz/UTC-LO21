@@ -22,6 +22,7 @@ class VuePartie : public QWidget
 public:
 
     explicit VuePartie(QWidget *parent = nullptr);
+    ~VuePartie();
 
     /// Update de la vue
     void update_vue_joueur();
@@ -40,7 +41,6 @@ public:
     [[nodiscard]] VueInfo* get_vue_infos() const {return infos;}
 
 private:
-    //Partie* partie_actuelle;
     unsigned int nb_joueurs;
     unsigned int joueur_affiche;
     std::vector<VueCarte *> tab_vue_shop;

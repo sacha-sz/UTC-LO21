@@ -4,7 +4,7 @@
 #include "Partie.h"
 #include "VuePartie.h"
 
-#define ARGENT_DEPART 3
+#define ARGENT_DEPART 3000
 
 using namespace std;
 
@@ -195,8 +195,6 @@ Partie::~Partie() {
 
     delete shop;
     delete pioche;
-    delete vue_partie;
-
 }
 
 void Partie::rejouer_tour() {
@@ -824,7 +822,7 @@ void Partie::suite_tour(bool achat_ok){
         /// Fin de la partie
         vue_partie->close();
         QMessageBox::information(vue_partie, "Fin de la partie", "Le joueur " + QString::fromStdString(tab_joueurs[joueur_actuel]->get_nom()) + " a gagne !");
-//        QCoreApplication::quit();
+        QCoreApplication::exit(0);
     } else {
         /// Fin du tour
         if (!rejouer) {

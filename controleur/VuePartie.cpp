@@ -480,3 +480,13 @@ void VuePartie::ne_rien_faire_bouton() {
         partie_actuelle->suite_tour(false);
     }
 }
+
+VuePartie::~VuePartie() {
+    /// Destructeur de VuePartie
+    map_des.clear();
+
+    for (auto it : tab_vue_shop) {
+        delete it;
+    }
+    tab_vue_shop.clear();
+}
