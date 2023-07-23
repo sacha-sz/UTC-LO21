@@ -4,7 +4,7 @@
 #include "Partie.h"
 #include "VuePartie.h"
 
-#define ARGENT_DEPART 3000
+#define ARGENT_DEPART 3
 
 using namespace std;
 
