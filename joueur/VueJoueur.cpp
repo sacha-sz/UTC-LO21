@@ -4,7 +4,7 @@
 
 using namespace std;
 
-VueJoueur::VueJoueur(Joueur* j,bool e_j_a, QWidget *parent) : carte_choisie(nullptr) {
+VueJoueur::VueJoueur(Joueur* j,bool e_j_a, QWidget *parent) : carte_choisie(nullptr), bouton_achat(nullptr){
     /// Vue d'un joueur
     est_joueur_actuel = e_j_a;
     joueur = j;
@@ -76,7 +76,7 @@ VueJoueur::VueJoueur(Joueur* j,bool e_j_a, QWidget *parent) : carte_choisie(null
             layout_batiments->addWidget((*vue_batiments)[i],ind_couleurs,ind_bat);
             if(bat.second>1){
                 // Si plusieurs exemplaires du batiment
-                QLabel* nb_bat = new QLabel;
+                auto nb_bat = new QLabel;
                 nb_bat->setText(QString::number(bat.second));
                 nb_bat->setStyleSheet("QLabel { color : white; background-color : black; }");
                 // Mise en forme
@@ -170,10 +170,10 @@ void VueJoueur::batimentClique(VueCarte* vc){
     if (Partie::get_instance()->get_vue_partie()->get_vue_carte() != nullptr) {
         Partie::get_instance()->get_vue_partie()->get_vue_carte()->close();
     }
-    QWidget* fenetre = new QWidget();
+    auto fenetre = new QWidget();
     Partie::get_instance()->get_vue_partie()->set_vue_carte(fenetre);
     // Création d'un label contenant l'image
-    QLabel *label = new QLabel(fenetre);
+    auto label = new QLabel(fenetre);
     QPixmap pixmap(QString::fromStdString(vc->getCarte()->get_path_image()));
     label->setPixmap(pixmap);
     label->resize(pixmap.size());
@@ -189,13 +189,13 @@ void VueJoueur::monumentClique(VueCarte* vc){
     if (Partie::get_instance()->get_vue_partie()->get_vue_carte() != nullptr) {
         Partie::get_instance()->get_vue_partie()->get_vue_carte()->close();
     }
-    QWidget* fenetre = new QWidget();
+    auto fenetre = new QWidget();
     Partie::get_instance()->get_vue_partie()->set_vue_carte(fenetre);
     // Création d'un label contenant l'image
-    QLabel *label = new QLabel(fenetre);
+    auto label = new QLabel(fenetre);
     QPixmap pixmap;
     if(vc->get_est_actif()){
-        Monument* mon = (Monument*)vc->getCarte();
+        auto mon = (Monument*)vc->getCarte();
         pixmap.load( QString::fromStdString(mon->get_path_image_actif()));
     }
     else{
@@ -204,6 +204,7 @@ void VueJoueur::monumentClique(VueCarte* vc){
     label->setPixmap(pixmap);
     label->resize(pixmap.size());
     if(get_est_joueur_actuel()){
+        QPushButton* old_bouton_achat = bouton_achat;
         bouton_achat = new QPushButton(fenetre);
         bouton_achat->setText(QString::fromStdString("Acheter monument"));
         carte_choisie = vc;
@@ -228,6 +229,7 @@ void VueJoueur::monumentClique(VueCarte* vc){
         }else{
             bouton_achat->setEnabled(false);
         }
+        delete old_bouton_achat;
     }
 
     // Affichage de la fenetre pop up

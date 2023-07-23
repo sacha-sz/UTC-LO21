@@ -3,13 +3,14 @@
 
 using namespace std;
 
-VueShop::VueShop(Shop *shop, QWidget *parent)  : carte_choisie(nullptr){
+VueShop::VueShop(Shop *shop, QWidget *)  : carte_choisie(nullptr){
     /// Calcul de la dimension de la grille
     largeur = floor(sqrt(shop->get_nb_tas_reel()));
 
     int x = 0;
     int y = 1;
     unsigned int compteur=0;
+    bouton_acheter = nullptr;
 
     for(auto &it : shop->get_contenu()){
         tab_vue_shop.push_back(new VueCarte(*(it.first),true, false));
@@ -18,7 +19,7 @@ VueShop::VueShop(Shop *shop, QWidget *parent)  : carte_choisie(nullptr){
         this->addWidget((tab_vue_shop)[compteur],x,y-1);
         if(it.second>1){
             // cas où on a plusieurs cartes identiques les unes sur les autres
-            QLabel* nb_carte = new QLabel;
+            auto nb_carte = new QLabel;
             nb_carte->setText(QString::number(it.second));
             //nb_carte->setAttribute(Qt::WA_TranslucentBackground);
             nb_carte->setStyleSheet("QLabel { color : white; background-color : black; }");
@@ -43,10 +44,10 @@ void VueShop::batiment_clique(VueCarte *vc) {
     if (Partie::get_instance()->get_vue_partie()->get_vue_carte() != nullptr) {
         Partie::get_instance()->get_vue_partie()->get_vue_carte()->close();
     }
-    QWidget* fenetre = new QWidget();
+    auto fenetre = new QWidget();
     Partie::get_instance()->get_vue_partie()->set_vue_carte(fenetre);
     // Création d'un label contenant l'image
-    QLabel *label = new QLabel(fenetre);
+    auto label = new QLabel(fenetre);
     QPixmap pixmap(QString::fromStdString(vc->getCarte()->get_path_image()));
     // Si on est dans la phase d'achat
     // On autorise l'achat
@@ -103,11 +104,11 @@ void VueShop::clicked_acheter_event(){
     else
     {
         // Fenetre pop up d'erreur
-        QWidget *pop_up = new QWidget();
-        QVBoxLayout* layout = new QVBoxLayout();
-        QLabel *label = new QLabel();
+        auto pop_up = new QWidget();
+        auto layout = new QVBoxLayout();
+        auto label = new QLabel();
         label->setText("Désolé. Vous ne pouvez pas acheter. Ce n'est pas la phase d'achat...");
-        QPushButton* bouton_erreur = new QPushButton(pop_up);
+        auto bouton_erreur = new QPushButton(pop_up);
         bouton_erreur->setText(QString::fromStdString("Je comprends"));
         // Ajout du bouton d'erreur pour valider
         QObject::connect(bouton_erreur, &QPushButton::clicked, [pop_up]() {

@@ -4,14 +4,14 @@
 
 using namespace std;
 
-VuePioche::VuePioche(Pioche* pioche, QWidget *parent) {
+VuePioche::VuePioche(Pioche* pioche, QWidget *) {
 
     if(pioche->get_taille() == 0) {
         pioche_exception = new QLabel;
         pioche_exception->setText("Pioche vide!");
         this->addWidget(pioche_exception,20, Qt::AlignCenter);
     }else{
-        QLabel* back_carte = new QLabel;
+        auto back_carte = new QLabel;
         QPixmap img(QString::fromStdString("../assets/batiments/BACK-cartes.png"));
         img = img.scaled(120,186,Qt::KeepAspectRatio);
         back_carte->setPixmap(img);
@@ -27,8 +27,3 @@ VuePioche::VuePioche(Pioche* pioche, QWidget *parent) {
     barre_pioche->setStyle(QStyleFactory::create("Fusion"));
     this->addWidget(barre_pioche,100, Qt::AlignCenter);
 }
-
-//VuePioche::~VuePioche() {
-//    delete pioche_exception;
-//    delete barre_pioche;
-//}

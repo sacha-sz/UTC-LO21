@@ -12,7 +12,6 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_PREFIX_PATH "C:/Qt/6.5.1/mingw_64/lib/cmake") #Sacha
 
 
-
 find_package(Qt6 COMPONENTS
         Core
         Gui
@@ -177,8 +176,6 @@ target_link_libraries(Machi_Koro
         Qt::Widgets
         Qt::Multimedia
         )
-
-
 if (WIN32)
     set(DEBUG_SUFFIX)
     if (MSVC AND CMAKE_BUILD_TYPE MATCHES "Debug")

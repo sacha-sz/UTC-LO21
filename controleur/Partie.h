@@ -93,6 +93,7 @@ public:
 
     // Lance un de
     static unsigned int lancer_de();
+    static unsigned int real_rand();
 
     //********** Methodes non statiques **********//
     void ajout_batiment(Batiment *batiment);

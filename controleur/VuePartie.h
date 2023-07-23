@@ -35,10 +35,9 @@ public:
     void update_nom_joueur();
 
     /// Getters
-    QWidget* get_vue_carte() const {return fenetre_carte;}
-    VueJoueur* get_vue_joueur() const {return vue_joueur;}
-    VueInfo* get_vue_infos() const {return infos;}
-    QMovie* get_animation_de(unsigned int i) const {return map_des[i];}
+    [[nodiscard]] QWidget* get_vue_carte() const {return fenetre_carte;}
+    [[nodiscard]] VueJoueur* get_vue_joueur() const {return vue_joueur;}
+    [[nodiscard]] VueInfo* get_vue_infos() const {return infos;}
 
 private:
     //Partie* partie_actuelle;
@@ -50,16 +49,15 @@ private:
 
     QLabel* label_joueur_actuel;
     // Dés
-    QLCDNumber* lcd_de1;
-    QLCDNumber* lcd_de2;
     QMap<unsigned int, QMovie*> map_des;
     QMovie* animation_de1;
     QMovie* animation_de2;
     QLabel* label_de1;
     QLabel* label_de2;
+    QLabel* ajout_supp_1;
+    QLabel* ajout_supp_2;
 
     //Images
-    QLabel* pioche_exception;
     QLabel* image_entete;
     QLabel *affichage_de_1;
     QLabel *affichage_de_2;
@@ -84,11 +82,7 @@ private:
     QPushButton* bouton_rien_faire;
     /// Milieu de la page
     //Pioche à gauche
-    QVBoxLayout *pioche;
-    QVBoxLayout *des;
-
     QWidget *fenetre_pioche;
-    QWidget *fenetre_des;
 
     VuePioche* view_pioche;
 

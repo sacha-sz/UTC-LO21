@@ -31,7 +31,7 @@ class Joueur {
 
     public:
         /*** Constructeurs et destructeur ***/
-        Joueur(const std::string& nom, const std::vector<Monument *>&list_mon, const std::vector<Batiment *>&list_bat, unsigned int arg_depart, strat_IA stratIa=none);
+        Joueur(std::string  nom, const std::vector<Monument *>&list_mon, const std::vector<Batiment *>&list_bat, unsigned int arg_depart, strat_IA stratIa=none);
         ~Joueur();
 
         /***** Getters *****/

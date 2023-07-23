@@ -10,6 +10,7 @@
 #include <QSpinBox>
 #include <QCheckBox>
 #include <QStandardItem>
+#include <QIcon>
 
 
 /// Project Includes
@@ -59,7 +60,6 @@ void validate_menu_2(QWidget *menu, const string &edition, const list<string> &e
 
 
     Partie *p = Partie::get_instance(edition, extensions, joueurs, shop_type, shop_size);
-    //vp->show();
     p->jouer_partie();
 }
 
@@ -374,6 +374,7 @@ int main(int argc, char * argv[]) {
 
     QApplication app(argc, argv);
     app.setStyle(QStyleFactory::create("Fusion"));
+    app.setWindowIcon(QIcon("assets/annexes/icon.ico"));
     launch_menu_1(&app);
 
     return QApplication::exec();

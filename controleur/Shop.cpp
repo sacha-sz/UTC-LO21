@@ -24,6 +24,16 @@ void Shop::completer_shop(Batiment *new_bat) {
             nb_tas_reel++;
         }
     }
+
+    // On tri le shop par ordre de cout et par couleur
+    vector<Batiment*> contenu_v = get_contenu_v();
+    sort(contenu_v.begin(), contenu_v.end(), [](Batiment* bat1, Batiment* bat2) {
+        if (bat1->get_prix() == bat2->get_prix()) {
+            return bat1->get_couleur() < bat2->get_couleur();
+        } else {
+            return bat1->get_prix() < bat2->get_prix();
+        }
+    });
 }
 
 Shop::~Shop() {
@@ -55,6 +65,7 @@ vector<Batiment*> Shop::get_contenu_v() const {
     ///Retourne le contenu du shop sous forme de vecteur
 
     vector<Batiment*> contenu_v;
+    contenu_v.reserve(contenu.size());
 
     for (auto & it : contenu) {
         contenu_v.push_back(it.first);

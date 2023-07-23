@@ -4,6 +4,8 @@
 #include "Partie.h"
 #include "VuePartie.h"
 
+#define ARGENT_DEPART 3
+
 using namespace std;
 
 Partie::Handler Partie::handler=Partie::Handler();
@@ -100,17 +102,17 @@ Partie::Partie(EditionDeJeu* edition,
     for (auto & joueur : joueurs){
 
         if (joueur.second == "Humain") {
-            tab_joueurs.push_back(new Joueur(joueur.first, list_monuments, starter_bat, 3));
+            tab_joueurs.push_back(new Joueur(joueur.first, list_monuments, starter_bat, ARGENT_DEPART));
         }
         else {
             if (joueur.second == "IA agressive") {
-                tab_joueurs.push_back(new Joueur(joueur.first, list_monuments, starter_bat, 3, agressive));
+                tab_joueurs.push_back(new Joueur(joueur.first, list_monuments, starter_bat, ARGENT_DEPART, agressive));
             }
             else if (joueur.second == "IA défensive") {
-                tab_joueurs.push_back(new Joueur(joueur.first, list_monuments, starter_bat, 3, defensif));
+                tab_joueurs.push_back(new Joueur(joueur.first, list_monuments, starter_bat, ARGENT_DEPART, defensif));
             }
             else if (joueur.second == "IA aléatoire") {
-                tab_joueurs.push_back(new Joueur(joueur.first, list_monuments, starter_bat, 3, aleatoire));
+                tab_joueurs.push_back(new Joueur(joueur.first, list_monuments, starter_bat, ARGENT_DEPART, aleatoire));
             }
             else {
                 throw gameException("Type de joueur inconnu");
@@ -226,7 +228,7 @@ void Partie::acheter_carte_ia() {
     bool transaction_fin;
 
 
-    choix_ia = (int)lancer_de() % 5;
+    choix_ia = (int)real_rand() % 5;
     if (choix_ia == 0) {
         visit[0] = true;
         transaction_fin = acheter_bat_ia();
@@ -237,7 +239,7 @@ void Partie::acheter_carte_ia() {
 
     if (!transaction_fin && !visit[0]) {
         visit[0] = true;
-        unsigned int rand_ia = Partie::lancer_de() % 3;
+        unsigned int rand_ia = Partie::real_rand() % 3;
         if (rand_ia != 0) {
             transaction_fin = acheter_bat_ia();
         }
@@ -266,10 +268,7 @@ bool Partie::acheter_monu_ia() {
     if (monuments_dispo.empty()) {
         return false;
     }
-    unsigned int res = 0;
-    for (int i = 0; i < lancer_de(); i++) {
-        res += lancer_de();
-    }
+    unsigned int res = real_rand();
 
     mon_picked = monuments_dispo[res % monuments_dispo.size()];
 
@@ -311,10 +310,7 @@ bool Partie::acheter_bat_ia() {
         }
     }
 
-    unsigned int res = 0;
-    for (int i = 0; i < lancer_de(); i++) {
-        res += lancer_de();
-    }
+    unsigned int res = real_rand();
 
     if (bat_shop_couleur.empty() && bat_shop_prix_ok.empty()) {
         return false;
@@ -384,10 +380,7 @@ bool Partie::acheter_monu(VueCarte* vue_carte) {
             }
         }
 
-        unsigned int res = 0;
-        for (int i = 0; i < lancer_de(); i++) {
-            res += lancer_de();
-        }
+        unsigned int res = real_rand();
 
         mon_picked = monuments_dispo[res % monuments_dispo.size()];
 
@@ -413,10 +406,10 @@ bool Partie::acheter_bat(VueCarte* vue_carte) {
     }
 
     if (bat_picked->get_prix() > joueur_act->get_argent()) {
-        QWidget* pop_up = new QWidget();
+        auto pop_up = new QWidget();
         pop_up->setWindowTitle("Erreur");
-        QLabel* label = new QLabel("Vous n'avez pas assez d'argent pour acheter ce batiment", pop_up);
-        QPushButton* ok = new QPushButton("OK", pop_up);
+        auto label = new QLabel("Vous n'avez pas assez d'argent pour acheter ce batiment", pop_up);
+        auto ok = new QPushButton("OK", pop_up);
         QObject::connect(ok, &QPushButton::clicked, pop_up, &QWidget::close);
 
         return false;
@@ -494,7 +487,7 @@ bool Partie::transfert_argent(unsigned int indice_joueur1, unsigned int indice_j
 void Partie::jouer_partie() {
     /// Fonction pour jouer une partie
     // Création de la vue
-    QWidget *fenetre = new QWidget;
+    auto fenetre = new QWidget;
     vue_partie = new VuePartie(fenetre);
     vue_partie->setWindowState(Qt::WindowMaximized);
     vue_partie->show();
@@ -507,7 +500,6 @@ void Partie::jouer_tour() {
     /// ****************************** ETAPE 1 : Variables + dés *******************************************************
     /// ****************************************************************************************************************
     unsigned int de_casse;
-    unsigned int de_1_temp, de_2_temp;
     bool centre_c_act = false;
     bool centre_c_possesseur = false;
     vector < Monument * > monuments_joueurs = tab_joueurs[joueur_actuel]->get_monument_jouables();
@@ -522,10 +514,8 @@ void Partie::jouer_tour() {
 
     /// Lancer des des
     de_1 = Partie::lancer_de();
-    de_1_temp = de_1;
-
     de_2 = 0;
-    de_casse = Partie::lancer_de() + Partie::lancer_de() + Partie::lancer_de() + Partie::lancer_de();
+    de_casse = real_rand();
 
     /// ****************************************************************************************************************
     /// ****************************** ETAPE 2 : Effets des monuments **************************************************
@@ -576,9 +566,6 @@ void Partie::jouer_tour() {
 
 
     vue_partie->update_des();
-
-    de_1_temp = de_1;
-    de_2_temp = de_2;
 
     /// Port + Fabrique du père noel
     for (auto mon: monuments_joueurs) {
@@ -852,21 +839,21 @@ unsigned int Partie::selectionner_joueur(const vector<Joueur*>& tab_joueurs, uns
 
     //cas où la decision doit se faire par une ia
     if(tab_joueurs[joueur_actuel]->get_est_ia()){
-        selection = (int)lancer_de() % tab_joueurs.size();
+        selection = (int)real_rand() % tab_joueurs.size();
         if(selection == joueur_actuel) selection = (selection + 1)%tab_joueurs.size();
     }
     //cas où c'est un joueur reel qui prend la decision
     else{
         // Fenetre de dialogue pour la selection
         while (selection == -1) {
-            QDialog *window = new QDialog();
+            auto window = new QDialog();
             window->setWindowTitle("Machi Koro - Selectionner un joueur");
             window->setContentsMargins(50, 30, 50, 50);
 
             vector<QPushButton *> liste_joueurs;
-            QVBoxLayout *layout_joueurs = new QVBoxLayout;
+            auto layout_joueurs = new QVBoxLayout;
             // Texte informatif
-            QLabel *texte = new QLabel(QString::fromStdString(
+            auto texte = new QLabel(QString::fromStdString(
                     tab_joueurs[joueur_actuel]->get_nom() + ", quel joueur veux tu sélectionner ?"));
             texte->setStyleSheet("QLabel { font-weight : bold; font-size : 25px; }");
             layout_joueurs->addWidget(texte);
@@ -876,7 +863,7 @@ unsigned int Partie::selectionner_joueur(const vector<Joueur*>& tab_joueurs, uns
                 // Ajout du joueur
                 if (joueur != tab_joueurs[joueur_actuel]) {
                     // Ajout du bouton
-                    QPushButton *bouton = new QPushButton;
+                    auto bouton = new QPushButton;
                     bouton->setText(QString::fromStdString(joueur->get_nom()));
                     liste_joueurs.push_back(bouton);
                     layout_joueurs->addWidget(liste_joueurs[i]);
@@ -907,4 +894,11 @@ unsigned int Partie::lancer_de() {
 
 void Partie::acheter_carte_event(VueCarte* vc) {
     acheter_carte(vc);
+}
+
+unsigned int Partie::real_rand() {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, 10000);
+    return dis(gen);
 }

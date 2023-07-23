@@ -13,7 +13,6 @@ EditionDeJeu::EditionDeJeu(const string& nom_edition) : nom(nom_edition) {
     if (nom_edition == "Deluxe") {
         /// Constructeur de Deluxe
         nom = "Deluxe";
-        est_edition = true;
         nb_joueurs_max = 5;
         nb_monuments_win = 5;
 
@@ -65,7 +64,6 @@ EditionDeJeu::EditionDeJeu(const string& nom_edition) : nom(nom_edition) {
     else if (nom_edition == "Standard") {
         /// Constructeur de Standard
         nom = "Standard";
-        est_edition = true;
         nb_joueurs_max = 4;
         nb_monuments_win = 4;
 
@@ -102,7 +100,6 @@ EditionDeJeu::EditionDeJeu(const string& nom_edition) : nom(nom_edition) {
     else if (nom_edition == "GreenValley") {
         /// Constructeur de GreenValley
         nom = "GreenValley";
-        est_edition = false;
         nb_joueurs_max = 4;
         nb_monuments_win = 4;
 
@@ -132,7 +129,6 @@ EditionDeJeu::EditionDeJeu(const string& nom_edition) : nom(nom_edition) {
 
         /// Constructeur de Marina
         nom = "Marina";
-        est_edition = false;
         nb_joueurs_max = 5;
         nb_monuments_win = 5;
 
@@ -176,7 +172,6 @@ EditionDeJeu::EditionDeJeu(const string& nom_edition) : nom(nom_edition) {
         
         /// Constructeur de Custom
         nom = "Custom";
-        est_edition = true;
         nb_joueurs_max = 6;
         nb_monuments_win = 8;
 

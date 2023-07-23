@@ -18,8 +18,8 @@ class VueJoueur : public QWidget
 Q_OBJECT
 public:
     explicit VueJoueur(Joueur* j,bool e_j_a,  QWidget *parent = nullptr);
-    bool get_est_joueur_actuel() const{return est_joueur_actuel;}
-    VueCarte* get_carte_choisie() const {return carte_choisie;}
+    [[nodiscard]] bool get_est_joueur_actuel() const{return est_joueur_actuel;}
+    [[nodiscard]] VueCarte* get_carte_choisie() const {return carte_choisie;}
 
 private:
     bool est_joueur_actuel;
@@ -43,13 +43,11 @@ private:
     VueCarte *carte_choisie;
     QScrollArea* scroll_bat;
     QScrollArea* scroll_mon;
-    QWidget *parent;
     QWidget* fenetre_bat_fermes; // Fenetre avec les batiments fermés
     QWidget* widget_scroll_bat;
     QWidget* widget_scroll_mon;
 
 public slots:
-    // slots qui gère les clics sur les cartes
     virtual void batimentClique(VueCarte* vc);
     void affichage_bat_ferme();
     void clicked_acheter_event();

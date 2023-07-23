@@ -2,10 +2,11 @@
 #define SRC_GAMEEXEPTION_H
 
 #include <exception>
+#include <utility>
 
 class gameException: public std::exception {
     public:
-        explicit gameException(std::string const& i):info(i){}
+        explicit gameException(std::string  i):info(std::move(i)){}
 
         [[nodiscard]] const char* what() const noexcept override
         {

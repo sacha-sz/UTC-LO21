@@ -3,6 +3,7 @@
 
 #include <map>
 #include <vector>
+#include <algorithm>
 
 #include "Batiment.h"
 #include "gameExeption.h"
@@ -20,10 +21,10 @@ class Shop{
         ~Shop();
 
         /**** Getters ****/
-        unsigned int get_nb_tas_max() const {return nb_tas_max;};
-        unsigned int get_nb_tas_reel() const {return nb_tas_reel;};
+        [[nodiscard]] unsigned int get_nb_tas_max() const {return nb_tas_max;};
+        [[nodiscard]] unsigned int get_nb_tas_reel() const {return nb_tas_reel;};
         const std::map<Batiment*, unsigned int>& get_contenu() {return contenu;};
-        std::vector<Batiment*> get_contenu_v() const;
+        [[nodiscard]] std::vector<Batiment*> get_contenu_v() const;
 
         /**** Methodes ****/
         void completer_shop(Batiment* new_bat);

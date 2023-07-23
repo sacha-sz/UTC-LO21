@@ -8,7 +8,6 @@ package Jeu <<Frame>> #EDF6F9{
                     - nb_monuments_win : unsigned int
                     - batiment : map<Batiment*,unsigned int>
                     - monument : vector<Monument*>
-                    - est_edition : bool
                     ----
                     + EditionDeJeu(nom : const str&)
                     + ~EditionDeJeu()

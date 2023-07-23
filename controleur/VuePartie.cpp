@@ -12,15 +12,17 @@ VuePartie::VuePartie(QWidget *parent){
     Partie *partie_actuelle = Partie::get_instance();
     parent_fenetre = parent;
     fenetre_carte = nullptr;
+    ajout_supp_1 = nullptr;
+    ajout_supp_2 = nullptr;
 
+    map_des.insert(0, new QMovie("../assets/des/0.gif"));
     map_des.insert(1, new QMovie("../assets/des/1.gif"));
     map_des.insert(2, new QMovie("../assets/des/2.gif"));
     map_des.insert(3, new QMovie("../assets/des/3.gif"));
     map_des.insert(4, new QMovie("../assets/des/4.gif"));
     map_des.insert(5, new QMovie("../assets/des/5.gif"));
     map_des.insert(6, new QMovie("../assets/des/6.gif"));
-    map_des.insert(0, new QMovie("../assets/des/0.gif"));
-
+    map_des.insert(7, new QMovie("../assets/des/6.gif"));
 
     structure = new QVBoxLayout();
 
@@ -83,7 +85,7 @@ VuePartie::VuePartie(QWidget *parent){
     //Ajout de l'image dans l'entete
     //Affichage de l'image "Machi Koro"
     image_entete = new QLabel;
-    QPixmap* image = new QPixmap("../assets/annexes/Machi-koro.png");
+    auto image = new QPixmap("../assets/annexes/Machi-koro.png");
     image->scaled(300,50, Qt::KeepAspectRatio);
     image_entete->setPixmap(*image);
 
@@ -109,7 +111,12 @@ VuePartie::VuePartie(QWidget *parent){
     label_de1->setFixedSize(50, 50);
     label_de1->setMovie(animation_de1);
     animation_de1->start();
-
+    if (partie_actuelle->get_de_1() == 7) {
+        ajout_supp_1 = new QLabel("+ 1");
+        ajout_supp_1->setStyleSheet("QLabel { background-color : transparent; color : red; }");
+        ajout_supp_1->setFixedSize(50, 50);
+        layout_de_1->addWidget(ajout_supp_1, 0, Qt::AlignCenter);
+    }
     layout_de_1->addWidget(label_de1, 0, Qt::AlignCenter);
     layout_de_1->setAlignment(Qt::AlignCenter);
 
@@ -119,6 +126,13 @@ VuePartie::VuePartie(QWidget *parent){
     label_de2->setFixedSize(50, 50);
     label_de2->setMovie(animation_de2);
     animation_de2->start();
+
+    if (partie_actuelle->get_de_2() == 7) {
+        ajout_supp_2 = new QLabel("+ 1");
+        ajout_supp_2->setStyleSheet("QLabel { background-color : transparent; color : red; }");
+        ajout_supp_2->setFixedSize(50, 50);
+        layout_de_2->addWidget(ajout_supp_2, 0, Qt::AlignCenter);
+    }
 
     connect(animation_de1, &QMovie::frameChanged, [=, this](int frameNumber) {
         if (frameNumber == animation_de1->frameCount() - 1) {
@@ -183,7 +197,7 @@ VuePartie::VuePartie(QWidget *parent){
     widget_shop->setLayout(view_shop);
     scroll_shop->setWidget(widget_shop);
     scroll_shop->setWidgetResizable(true);
-    unsigned int largeur = floor(sqrt(partie_actuelle->get_shop()->get_nb_tas_reel()));
+    int largeur = floor(sqrt(partie_actuelle->get_shop()->get_nb_tas_reel()));
     scroll_shop->setFixedWidth(130 * largeur);
     scroll_shop->setFixedHeight(260);
     scroll_shop->setStyle(QStyleFactory::create("Fusion"));
@@ -201,11 +215,11 @@ VuePartie::VuePartie(QWidget *parent){
 
 
     // Boutons de navigation gauche et droite dans les Vues Joueurs
-    QPushButton* b1 = new QPushButton(parent);
+    auto b1 = new QPushButton(parent);
     b1->setFixedSize(200,50);
     b1->setText(QString::fromStdString("(<) Joueur précédent"));
     connect(b1, SIGNAL(clicked()),this, SLOT(g_click()));
-    QPushButton* b2 = new QPushButton(parent);
+    auto b2 = new QPushButton(parent);
     b2->setFixedSize(200,50);
     b2->setText(QString::fromStdString("Joueur suivant (>)"));
     connect(b2, SIGNAL(clicked()),this, SLOT(d_click()));
@@ -296,20 +310,45 @@ void VuePartie::update_des() {
     unsigned int de1 = Partie::get_instance()->get_de_1();
     unsigned int de2 = Partie::get_instance()->get_de_2();
 
+    if (ajout_supp_1 != nullptr) {
+        delete ajout_supp_1;
+        ajout_supp_1 = nullptr;
+    }
+
+    if (ajout_supp_2 != nullptr) {
+        delete ajout_supp_2;
+        ajout_supp_2 = nullptr;
+    }
+
     // Mise à jour des dés
     animation_de1 = map_des.value((int)de1);
+    animation_de1->setSpeed(180);
     animation_de1->setScaledSize(QSize(50, 50));
     label_de1->setFixedSize(50, 50);
     label_de1->setMovie(animation_de1);
     animation_de1->start();
 
+    if (de1 == 7) {
+        ajout_supp_1 = new QLabel("+ 1");
+        ajout_supp_1->setStyleSheet("QLabel { background-color : transparent; color : red; }");
+        ajout_supp_1->setFixedSize(50, 50);
+        layout_de_1->addWidget(ajout_supp_1, 0, Qt::AlignCenter);
+    }
 
     label_de2 = new QLabel;
     animation_de2 = map_des.value((int)de2);
+    animation_de2->setSpeed(180);
     animation_de2->setScaledSize(QSize(50, 50));
     label_de2->setFixedSize(50, 50);
     label_de2->setMovie(animation_de2);
     animation_de2->start();
+
+    if (de2 == 7) {
+        ajout_supp_2 = new QLabel("+ 1");
+        ajout_supp_2->setStyleSheet("QLabel { background-color : transparent; color : red; }");
+        ajout_supp_2->setFixedSize(50, 50);
+        layout_de_2->addWidget(ajout_supp_2, 0, Qt::AlignCenter);
+    }
 
     connect(animation_de1, &QMovie::frameChanged, [=, this](int frameNumber) {
         if (frameNumber == animation_de1->frameCount() - 1) {
@@ -369,6 +408,7 @@ void VuePartie::update_vue_partie() {
     /// Update de la vue partie
     update();
     this->setWindowState(Qt::WindowMaximized);
+    this->setWindowIcon(QIcon("../assets/annexes/icon.ico"));
 }
 
 void VuePartie::update_vue_shop() {
@@ -384,7 +424,7 @@ void VuePartie::update_vue_shop() {
     widget_shop->setLayout(view_shop);
     scroll_shop->setWidget(widget_shop);
     scroll_shop->setWidgetResizable(true);
-    unsigned int largeur = floor(sqrt(partie_actuelle->get_shop()->get_nb_tas_reel()));
+    int largeur = floor(sqrt(partie_actuelle->get_shop()->get_nb_tas_reel()));
     scroll_shop->setFixedWidth(130 * largeur);
     scroll_shop->setFixedHeight(520);
     scroll_shop->setStyle(QStyleFactory::create("Fusion"));
@@ -415,7 +455,6 @@ void VuePartie::update_vue_pioche() {
 }
 
 void VuePartie::update_vue_info () {
-    Partie* partie_actuelle = Partie::get_instance();
     // On appelle la fonction de mise à jour de l'affichage
     VueInfo* old = infos;
     QWidget* old_widget = widget_infos;
